@@ -6,7 +6,16 @@ const MAX_PAGES = 340;
 const CONCURRENCY = 5;
 const API = "https://kitsu.io/api/edge/manga";
 
-const current = JSON.parse(await readFile("public/comic-catalog.json", "utf8"));
+const catalogText = await readFile("public/comic-catalog.json", "utf8");
+let current;
+try {
+  current = JSON.parse(catalogText);
+} catch (error) {
+  const firstNetworkComic = catalogText.indexOf(',{"id":"kitsu-');
+  if (firstNetworkComic < 0) throw error;
+  current = JSON.parse(catalogText.slice(0, firstNetworkComic) + "]}");
+  console.warn(`目录文件损坏，已保留 ${current.comics.length} 部人工精选作品并重建网络目录`);
+}
 const curated = (current.comics || []).filter((comic) => !String(comic.id).startsWith("kitsu-"));
 const previousNetwork = (current.comics || []).filter((comic) => String(comic.id).startsWith("kitsu-"));
 

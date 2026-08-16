@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { BaiduToken, getCredentials, sameOrigin, setTokenCookie } from "../_lib";
+import { BaiduToken, getBaiduRedirectUri, getCredentials, sameOrigin, setTokenCookie } from "../_lib";
 
 async function exchangeCode(code:string,appKey:string,appSecret:string,redirectUri:string){
   const params=new URLSearchParams({grant_type:"authorization_code",code,client_id:appKey,client_secret:appSecret,redirect_uri:redirectUri});
@@ -18,7 +18,7 @@ export async function GET(request:NextRequest){
   const destination=new URL("/?baidu=connected",url.origin);
   if(!appKey||!appSecret||!code||!state||state!==savedState)return NextResponse.redirect(new URL("/?baidu=authorization_failed",url.origin));
   try{
-    const token=await exchangeCode(code,appKey,appSecret,`${url.origin}/api/baidu/exchange`);
+    const token=await exchangeCode(code,appKey,appSecret,getBaiduRedirectUri(request));
     const response=NextResponse.redirect(destination);
     response.cookies.delete("galaxy_baidu_oauth_state");
     await setTokenCookie(response,token,appSecret);

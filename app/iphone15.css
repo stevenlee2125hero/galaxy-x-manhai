@@ -37,7 +37,7 @@
 @media (display-mode: standalone) {
   html,
   body {
-    overscroll-behavior-y: none;
+    overscroll-behavior-y: auto;
   }
 
   .app-shell {
@@ -52,7 +52,7 @@
     padding-bottom: max(calc(var(--safe-bottom) + 9px), 17px);
   }
 
-  .install-prompt {
+  .install-prompt:not(.compact) {
     display: none;
   }
 }

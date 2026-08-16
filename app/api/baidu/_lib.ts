@@ -55,6 +55,21 @@ export function getCredentials(request:NextRequest){
   };
 }
 
+export function getBaiduRedirectUri(request:NextRequest){
+  const configured=process.env.BAIDU_REDIRECT_URI?.trim();
+  if(configured){
+    try{
+      const url=new URL(configured);
+      if(url.protocol==="https:"||(url.protocol==="http:"&&["localhost","127.0.0.1"].includes(url.hostname)))return url.toString();
+    }catch{}
+  }
+  const requestUrl=new URL(request.url);
+  const forwardedHost=request.headers.get("x-forwarded-host")?.split(",")[0]?.trim();
+  const forwardedProto=request.headers.get("x-forwarded-proto")?.split(",")[0]?.trim();
+  const origin=forwardedHost?`${forwardedProto||requestUrl.protocol.replace(":","")}://${forwardedHost}`:requestUrl.origin;
+  return new URL("/api/baidu/exchange",origin).toString();
+}
+
 export function setCredentialCookies(response:NextResponse,appKey:string,appSecret:string){
   response.cookies.set(cookieNames.key,appKey,cookieOptions);
   response.cookies.set(cookieNames.secret,appSecret,cookieOptions);
