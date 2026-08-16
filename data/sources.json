@@ -1,0 +1,55 @@
+{
+  "notice": "只同步中国大陆可访问的正版目录元数据与真实出版封面，不复制商业漫画正文。",
+  "sources": [
+    {
+      "id": "one-piece",
+      "name": "航海王 · 哔哩哔哩漫画",
+      "enabled": true,
+      "mode": "official-html",
+      "catalogUrl": "https://manga.bilibili.com/detail/mc24742",
+      "chapterPattern": "全部章节[^0-9]*(\\d+)",
+      "coverUrl": "https://covers.openlibrary.org/b/isbn/9781569319017-L.jpg",
+      "coverFile": "one-piece.jpg"
+    },
+    {
+      "id": "naruto",
+      "name": "火影忍者 · 哔哩哔哩漫画",
+      "enabled": true,
+      "mode": "official-html",
+      "catalogUrl": "https://manga.bilibili.com/detail/mc24733",
+      "chapterPattern": "全部章节[^0-9]*(\\d+)",
+      "coverUrl": "https://covers.openlibrary.org/b/isbn/9781569319000-L.jpg",
+      "coverFile": "naruto.jpg"
+    },
+    {
+      "id": "dragon-ball",
+      "name": "龙珠 · 哔哩哔哩漫画",
+      "enabled": true,
+      "mode": "official-html",
+      "catalogUrl": "https://manga.bilibili.com/detail/mc24743",
+      "chapterPattern": "全部章节[^0-9]*(\\d+)",
+      "coverUrl": "https://covers.openlibrary.org/b/isbn/9781569319208-L.jpg",
+      "coverFile": "dragon-ball.jpg"
+    },
+    {
+      "id": "chainsaw-man",
+      "name": "电锯人 · 哔哩哔哩漫画",
+      "enabled": true,
+      "mode": "official-html",
+      "catalogUrl": "https://manga.bilibili.com/detail/mc28376",
+      "chapterPattern": "全部章节[^0-9]*(\\d+)",
+      "coverUrl": "https://covers.openlibrary.org/b/isbn/9781974709939-L.jpg",
+      "coverFile": "chainsaw-man.jpg"
+    },
+    {
+      "id": "jujutsu-kaisen",
+      "name": "咒术回战 · 哔哩哔哩漫画",
+      "enabled": true,
+      "mode": "official-html",
+      "catalogUrl": "https://manga.bilibili.com/detail/mc26505",
+      "chapterPattern": "全部章节[^0-9]*(\\d+)",
+      "coverUrl": "https://covers.openlibrary.org/b/isbn/9781974710027-L.jpg",
+      "coverFile": "jujutsu-kaisen.jpg"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "id": "/",
+  "name": "银河X漫海",
+  "short_name": "银河X漫海",
+  "description": "适合 iPhone 15 Plus 的私人漫画阅读与正版来源导航",
+  "lang": "zh-CN",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#c7efff",
+  "theme_color": "#c7efff",
+  "categories": ["books", "entertainment"],
+  "icons": [
+    {"src":"/app-icon-192.png","sizes":"192x192","type":"image/png","purpose":"any"},
+    {"src":"/app-icon-512.png","sizes":"512x512","type":"image/png","purpose":"any maskable"},
+    {"src":"/app-icon-1024.png","sizes":"1024x1024","type":"image/png","purpose":"any"}
+  ]
+}

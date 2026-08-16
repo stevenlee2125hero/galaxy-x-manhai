@@ -1,0 +1,50 @@
+name: Nightly authorized manga sync
+
+on:
+  schedule:
+    - cron: "7 17 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Refresh official WEBTOON direct titles
+        run: node scripts/refresh-webtoon-direct.mjs
+      - name: Refresh 5000-title real catalog
+        run: node scripts/build-network-catalog.mjs
+      - name: Check authorized feeds
+        run: node scripts/nightly-sync.mjs
+      - name: Check for imported pages
+        id: imports
+        run: |
+          if find imports -type f ! -name '.gitkeep' | grep -q .; then
+            echo "found=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "found=false" >> "$GITHUB_OUTPUT"
+          fi
+      - uses: actions/setup-python@v5
+        if: steps.imports.outputs.found == 'true'
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Translate imported Japanese pages offline
+        if: steps.imports.outputs.found == 'true'
+        run: |
+          pip install -r requirements-translate.txt
+          python scripts/translate-imports.py
+      - name: Save sync status
+        run: |
+          git config user.name "mangaverse-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add public/comic-catalog.json public/sync-status.json public/source-status.json public/source-access.json public/covers public/translations 2>/dev/null || true
+          git diff --cached --quiet || git commit -m "chore: nightly authorized feed sync"
+          git push

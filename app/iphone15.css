@@ -1,0 +1,70 @@
+/* iPhone 15 Plus: keep controls clear of the Dynamic Island, rounded corners and Home indicator. */
+.bottom-nav {
+  padding-left: calc(14px + var(--safe-left));
+  padding-right: calc(14px + var(--safe-right));
+}
+
+.reader-bar {
+  min-height: calc(var(--safe-top) + 63px);
+  padding-top: max(calc(var(--safe-top) + 9px), 18px);
+  padding-right: calc(16px + var(--safe-right));
+  padding-left: calc(16px + var(--safe-left));
+}
+
+.lock-screen {
+  min-height: 100dvh;
+  padding-top: calc(var(--safe-top) + 34px);
+  padding-right: calc(var(--safe-right) + 28px);
+  padding-bottom: calc(var(--safe-bottom) + 32px);
+  padding-left: calc(var(--safe-left) + 28px);
+  background: linear-gradient(180deg, #83d2f7 0, #bce9ff calc(var(--safe-top) + 40px), #e6f7ff 48%, #fbfdff);
+}
+
+@media (max-width: 430px) {
+  .app-shell {
+    padding-left: calc(16px + var(--safe-left));
+    padding-right: calc(16px + var(--safe-right));
+  }
+
+  .category-scroller {
+    margin-left: calc(-16px - var(--safe-left));
+    margin-right: calc(-16px - var(--safe-right));
+    padding-left: calc(16px + var(--safe-left));
+    padding-right: calc(16px + var(--safe-right));
+  }
+}
+
+@media (display-mode: standalone) {
+  html,
+  body {
+    overscroll-behavior-y: none;
+  }
+
+  .app-shell {
+    padding-top: max(calc(var(--safe-top) + 10px), 22px);
+  }
+
+  .topbar {
+    min-height: 50px;
+  }
+
+  .bottom-nav {
+    padding-bottom: max(calc(var(--safe-bottom) + 9px), 17px);
+  }
+
+  .install-prompt {
+    display: none;
+  }
+}
+
+@media (display-mode: standalone) and (orientation: landscape) {
+  .app-shell {
+    padding-left: calc(18px + var(--safe-left));
+    padding-right: calc(18px + var(--safe-right));
+  }
+
+  .bottom-nav {
+    padding-left: calc(14px + var(--safe-left));
+    padding-right: calc(14px + var(--safe-right));
+  }
+}
