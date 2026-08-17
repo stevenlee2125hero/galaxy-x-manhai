@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-08-16T17:40:50.200Z",
+  "updatedAt": "2026-08-17T18:02:05.942Z",
   "policies": {
     "MANGA Plus": {
       "tier": "overseas",
@@ -11,7 +11,7 @@
       "risk": false,
       "removed": false,
       "health": "online",
-      "checkedAt": "2026-08-16T17:40:50.158Z",
+      "checkedAt": "2026-08-17T18:02:05.924Z",
       "riskScan": "unavailable",
       "riskReasons": [],
       "finalUrl": "https://mangaplus.shueisha.co.jp/"
@@ -25,7 +25,7 @@
       "risk": false,
       "removed": false,
       "health": "online",
-      "checkedAt": "2026-08-16T17:40:50.048Z",
+      "checkedAt": "2026-08-17T18:02:05.796Z",
       "riskScan": "unavailable",
       "riskReasons": [],
       "finalUrl": "https://manga.bilibili.com/"
@@ -39,7 +39,7 @@
       "risk": false,
       "removed": false,
       "health": "online",
-      "checkedAt": "2026-08-16T17:40:49.902Z",
+      "checkedAt": "2026-08-17T18:02:05.571Z",
       "riskScan": "unavailable",
       "riskReasons": [],
       "finalUrl": "https://www.viz.com/shonenjump"
@@ -53,7 +53,7 @@
       "risk": false,
       "removed": false,
       "health": "online",
-      "checkedAt": "2026-08-16T17:40:49.913Z",
+      "checkedAt": "2026-08-17T18:02:05.676Z",
       "riskScan": "unavailable",
       "riskReasons": [],
       "finalUrl": "https://www.viz.com/shonenjump"
@@ -67,7 +67,7 @@
       "risk": false,
       "removed": false,
       "health": "online",
-      "checkedAt": "2026-08-16T17:40:50.095Z",
+      "checkedAt": "2026-08-17T18:02:05.941Z",
       "riskScan": "unavailable",
       "riskReasons": [],
       "finalUrl": "https://www.tappytoon.com/en/"
@@ -81,7 +81,7 @@
       "risk": false,
       "removed": false,
       "health": "online",
-      "checkedAt": "2026-08-16T17:40:50.134Z",
+      "checkedAt": "2026-08-17T18:02:05.863Z",
       "riskScan": "unavailable",
       "riskReasons": [],
       "finalUrl": "https://www.webtoons.com/en/"
@@ -95,7 +95,7 @@
       "risk": false,
       "removed": false,
       "health": "online",
-      "checkedAt": "2026-08-16T17:40:50.055Z",
+      "checkedAt": "2026-08-17T18:02:05.915Z",
       "riskScan": "unavailable",
       "riskReasons": [],
       "finalUrl": "https://www.dcuniverseinfinite.com/"
@@ -111,8 +111,8 @@
       "health": "online",
       "riskScan": "unavailable",
       "riskReasons": [],
-      "finalUrl": "https://www.webtoons.com/zh-hant/fantasy/the-ghost-writing-hero/list?title_no=8530",
-      "checkedAt": "2026-08-16T17:40:50.199Z"
+      "finalUrl": "https://www.webtoons.com/zh-hant/romance/introverted-boy-and-girl/list?title_no=5649",
+      "checkedAt": "2026-08-17T18:02:05.941Z"
     },
     "Kitsu 作品资料": {
       "tier": "overseas",
@@ -125,8 +125,8 @@
       "health": "restricted",
       "riskScan": "unavailable",
       "riskReasons": [],
-      "finalUrl": "https://kitsu.app/manga/boy-skirt",
-      "checkedAt": "2026-08-16T17:40:50.097Z"
+      "finalUrl": "https://kitsu.app/manga/houkago-sensei-to-koi-ni-ochiru",
+      "checkedAt": "2026-08-17T18:02:05.894Z"
     }
   }
 }
