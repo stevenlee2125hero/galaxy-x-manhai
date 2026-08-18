@@ -409,7 +409,8 @@ export default function Home(){
   };
   const enter=()=>{ localStorage.setItem("galaxy:session","active"); localStorage.setItem("galaxy:session-expiry",String(Date.now()+SESSION_MS)); setLocked(false); };
   const lock=()=>{ localStorage.removeItem("galaxy:session"); localStorage.removeItem("galaxy:session-expiry"); setLocked(true); };
-  const dailyRoaming=tab==="home"&&activeCategory==="全部"&&!query&&!activeStatus;
+  const dailyRotation=tab==="home"||tab==="favorites";
+  const rotationSeed=`${localWeekKey()}:${todayKey}`;
 
   const visibleComics=useMemo(()=>catalog.filter(comic=>{
     if(blocked.includes(comic.id)) return false;
@@ -422,8 +423,8 @@ export default function Home(){
     if(["日漫","韩漫","美漫"].includes(activeCategory)) return comic.region===activeCategory;
     return comic.genre.includes(activeCategory);
   }).sort((a,b)=>{
-    if(dailyRoaming){
-      const dailyOrder=dailyHash(`${todayKey}:${a.id}`)-dailyHash(`${todayKey}:${b.id}`);
+    if(dailyRotation){
+      const dailyOrder=dailyHash(`${rotationSeed}:${a.id}`)-dailyHash(`${rotationSeed}:${b.id}`);
       if(dailyOrder) return dailyOrder;
     }
     const aTier=comicTier(a,accessPolicies,memberships,offlinePacks.some(pack=>pack.comicId===a.id),Boolean(matchingBaiduFile(a,baiduMatchIndex)));
@@ -438,7 +439,7 @@ export default function Home(){
       return (a.popularityRank||Number.MAX_SAFE_INTEGER)-(b.popularityRank||Number.MAX_SAFE_INTEGER);
     }
     return displayRank[aTier]-displayRank[bTier];
-  }),[accessPolicies,activeCategory,activeStatus,baiduMatchIndex,blocked,catalog,dailyRoaming,favorites,memberships,offlinePacks,query,tab,todayKey,weeklyReads]);
+  }),[accessPolicies,activeCategory,activeStatus,baiduMatchIndex,blocked,catalog,dailyRotation,favorites,memberships,offlinePacks,query,rotationSeed,tab,weeklyReads]);
   const weeklyBoards=useMemo<WeeklyBoard[]>(()=>{
     const base=catalog.filter(comic=>{
       if(blocked.includes(comic.id)) return false;
@@ -458,21 +459,24 @@ export default function Home(){
     };
     const top=(status?:StatusFilter)=>base
       .filter(comic=>!status||comicHasStatus(comic,status,accessPolicies,memberships,offlinePacks.some(pack=>pack.comicId===comic.id),Boolean(matchingBaiduFile(comic,baiduMatchIndex))))
-      .sort(compare)
+      .sort((a,b)=>{
+        const dailyOrder=dailyHash(`${rotationSeed}:${a.id}`)-dailyHash(`${rotationSeed}:${b.id}`);
+        return dailyOrder||compare(a,b);
+      })
       .slice(0,20);
     return [
       {key:"overall",title:"总榜",subtitle:"全部观看方式 · TOP 20",comics:top()},
       ...statusFilters.map(status=>({key:status,title:`${displayLabels[status]}榜`,subtitle:`${displayLabels[status]} · TOP 20`,comics:top(status)}))
     ];
-  },[accessPolicies,baiduMatchIndex,blocked,catalog,favorites,memberships,offlinePacks,query,tab,weeklyReads]);
+  },[accessPolicies,baiduMatchIndex,blocked,catalog,favorites,memberships,offlinePacks,query,rotationSeed,tab,weeklyReads]);
   const shownComics=visibleComics.slice(0,visibleLimit);
   const sectionTitle=activeStatus?displayLabels[activeStatus]:tab==="favorites"?"我的收藏":query?`“${query}”`:"漫游推荐";
 
   const heroComic=useMemo(()=>{
     const lastRead=Object.entries(history).sort((a,b)=>b[1]-a[1]).map(([id])=>catalog.find(item=>item.id===id)).find(Boolean);
-    const dailyFirst=[...catalog].sort((a,b)=>dailyHash(`${todayKey}:${a.id}`)-dailyHash(`${todayKey}:${b.id}`))[0];
+    const dailyFirst=[...catalog].sort((a,b)=>dailyHash(`${rotationSeed}:${a.id}`)-dailyHash(`${rotationSeed}:${b.id}`))[0];
     return lastRead||dailyFirst||null;
-  },[catalog,history,todayKey]);
+  },[catalog,history,rotationSeed]);
 
   if(locked) return <LockScreen onEnter={enter}/>;
 
