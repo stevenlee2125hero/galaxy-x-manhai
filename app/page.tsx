@@ -67,14 +67,36 @@ function sourceTier(source:ComicSource,policies:Record<string,SourcePolicy>,memb
 }
 
 function normalizeTitle(value:string){return value.toLowerCase().replace(/\.(pdf|cbz|zip|rar|7z)$/i,"").replace(/[^\p{L}\p{N}]+/gu,"");}
-function matchingBaiduFile(comic:Comic,files:BaiduFile[]){
+type BaiduMatchIndex=Map<string,BaiduFile[]>;
+
+function buildBaiduMatchIndex(files:BaiduFile[]):BaiduMatchIndex{
+  const index:BaiduMatchIndex=new Map();
+  for(const file of files){
+    if(file.isdir) continue;
+    const searchable=normalizeTitle(`${file.path} ${file.name}`);
+    for(let cursor=0;cursor<searchable.length-1;cursor+=1){
+      const key=searchable.slice(cursor,cursor+2);
+      const bucket=index.get(key);
+      if(bucket) bucket.push(file);
+      else index.set(key,[file]);
+    }
+  }
+  return index;
+}
+
+function matchingBaiduFile(comic:Comic,index:BaiduMatchIndex){
   const title=normalizeTitle(comic.title);
   const subtitle=normalizeTitle(comic.subtitle);
-  return files.find(file=>{
-    if(file.isdir) return false;
+  const candidates=new Set<BaiduFile>();
+  for(const query of [title,subtitle]){
+    if(query.length<2) continue;
+    for(const file of index.get(query.slice(0,2))||[]) candidates.add(file);
+  }
+  for(const file of candidates){
     const searchable=normalizeTitle(`${file.path} ${file.name}`);
-    return (title.length>1&&searchable.includes(title))||(subtitle.length>3&&searchable.includes(subtitle));
-  });
+    if((title.length>1&&searchable.includes(title))||(subtitle.length>3&&searchable.includes(subtitle))) return file;
+  }
+  return undefined;
 }
 
 function orderedSources(comic:Comic,policies:Record<string,SourcePolicy>,memberships:string[]){
@@ -122,6 +144,16 @@ function localWeekKey(date=new Date()){
   const monday=new Date(date.getFullYear(),date.getMonth(),date.getDate());
   monday.setDate(monday.getDate()-((monday.getDay()+6)%7));
   return `${monday.getFullYear()}-${String(monday.getMonth()+1).padStart(2,"0")}-${String(monday.getDate()).padStart(2,"0")}`;
+}
+
+function localDayKey(date=new Date()){
+  return `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,"0")}-${String(date.getDate()).padStart(2,"0")}`;
+}
+
+function dailyHash(value:string){
+  let hash=2166136261;
+  for(const character of value){ hash^=character.charCodeAt(0); hash=Math.imul(hash,16777619); }
+  return hash>>>0;
 }
 
 function localLockHash(value:string){
@@ -226,7 +258,9 @@ export default function Home(){
   const [locked,setLocked]=useState(true);
   const [toast,setToast]=useState("");
   const [syncMessage,setSyncMessage]=useState("每天 01:00 检查目录");
+  const [todayKey,setTodayKey]=useState(localDayKey());
   const categoryNav=useRef<HTMLElement|null>(null);
+  const baiduMatchIndex=useMemo(()=>buildBaiduMatchIndex(baiduFiles),[baiduFiles]);
 
   useEffect(()=>{
     const savedFavorites=loadJson("galaxy:favorites",["one-piece","dragon-ball"]);
@@ -278,6 +312,10 @@ export default function Home(){
   },[]);
 
   useEffect(()=>{ if(!toast)return; const timer=window.setTimeout(()=>setToast(""),2400); return()=>window.clearTimeout(timer); },[toast]);
+  useEffect(()=>{
+    const timer=window.setInterval(()=>setTodayKey(localDayKey()),60*1000);
+    return()=>window.clearInterval(timer);
+  },[]);
   useEffect(()=>{
     const active=categoryNav.current?.querySelector<HTMLButtonElement>("button.active");
     active?.scrollIntoView({behavior:"smooth",block:"nearest",inline:"center"});
@@ -361,7 +399,7 @@ export default function Home(){
   const openPreferred=(comic:Comic,sourceOverride?:ComicSource)=>{
     const offline=offlinePacks.find(pack=>pack.comicId===comic.id);
     if(offline){ void openPack(offline); return; }
-    const cloud=matchingBaiduFile(comic,baiduFiles);
+    const cloud=matchingBaiduFile(comic,baiduMatchIndex);
     if(cloud){updateHistory(comic.id,history[comic.id]||1);recordWeeklyRead(comic.id);window.open(`/api/baidu/download?fs_id=${encodeURIComponent(cloud.fs_id)}`,"_blank","noopener,noreferrer");return;}
     const preferred=sourceOverride||comic.sources.find(source=>source.name===selectedSources[comic.id])||orderedSources(comic,accessPolicies,memberships).find(source=>sourceTier(source,accessPolicies,memberships)!=="risk");
     if(!preferred){ setToast("没有通过安全检查的可用来源"); return; }
@@ -371,20 +409,25 @@ export default function Home(){
   };
   const enter=()=>{ localStorage.setItem("galaxy:session","active"); localStorage.setItem("galaxy:session-expiry",String(Date.now()+SESSION_MS)); setLocked(false); };
   const lock=()=>{ localStorage.removeItem("galaxy:session"); localStorage.removeItem("galaxy:session-expiry"); setLocked(true); };
+  const dailyRoaming=tab==="home"&&activeCategory==="全部"&&!query&&!activeStatus;
 
   const visibleComics=useMemo(()=>catalog.filter(comic=>{
     if(blocked.includes(comic.id)) return false;
     const q=query.trim().toLowerCase();
     if(q&&!([comic.title,comic.subtitle,comic.author,...comic.genre].join(" ").toLowerCase().includes(q))) return false;
     if(tab==="favorites"&&!favorites.includes(comic.id)) return false;
-    if(activeStatus&&!comicHasStatus(comic,activeStatus,accessPolicies,memberships,offlinePacks.some(pack=>pack.comicId===comic.id),Boolean(matchingBaiduFile(comic,baiduFiles)))) return false;
+    if(activeStatus&&!comicHasStatus(comic,activeStatus,accessPolicies,memberships,offlinePacks.some(pack=>pack.comicId===comic.id),Boolean(matchingBaiduFile(comic,baiduMatchIndex)))) return false;
     if(activeCategory==="全部"||activeCategory==="本周排行") return true;
     if(activeCategory==="彩漫") return comic.color==="color";
     if(["日漫","韩漫","美漫"].includes(activeCategory)) return comic.region===activeCategory;
     return comic.genre.includes(activeCategory);
   }).sort((a,b)=>{
-    const aTier=comicTier(a,accessPolicies,memberships,offlinePacks.some(pack=>pack.comicId===a.id),Boolean(matchingBaiduFile(a,baiduFiles)));
-    const bTier=comicTier(b,accessPolicies,memberships,offlinePacks.some(pack=>pack.comicId===b.id),Boolean(matchingBaiduFile(b,baiduFiles)));
+    if(dailyRoaming){
+      const dailyOrder=dailyHash(`${todayKey}:${a.id}`)-dailyHash(`${todayKey}:${b.id}`);
+      if(dailyOrder) return dailyOrder;
+    }
+    const aTier=comicTier(a,accessPolicies,memberships,offlinePacks.some(pack=>pack.comicId===a.id),Boolean(matchingBaiduFile(a,baiduMatchIndex)));
+    const bTier=comicTier(b,accessPolicies,memberships,offlinePacks.some(pack=>pack.comicId===b.id),Boolean(matchingBaiduFile(b,baiduMatchIndex)));
     if(activeCategory==="本周排行"||activeStatus){
       const reads=(weeklyReads[b.id]||0)-(weeklyReads[a.id]||0);
       if(reads) return reads;
@@ -395,7 +438,7 @@ export default function Home(){
       return (a.popularityRank||Number.MAX_SAFE_INTEGER)-(b.popularityRank||Number.MAX_SAFE_INTEGER);
     }
     return displayRank[aTier]-displayRank[bTier];
-  }),[accessPolicies,activeCategory,activeStatus,baiduFiles,blocked,catalog,favorites,memberships,offlinePacks,query,tab,weeklyReads]);
+  }),[accessPolicies,activeCategory,activeStatus,baiduMatchIndex,blocked,catalog,dailyRoaming,favorites,memberships,offlinePacks,query,tab,todayKey,weeklyReads]);
   const weeklyBoards=useMemo<WeeklyBoard[]>(()=>{
     const base=catalog.filter(comic=>{
       if(blocked.includes(comic.id)) return false;
@@ -407,28 +450,29 @@ export default function Home(){
     const compare=(a:Comic,b:Comic)=>{
       const reads=(weeklyReads[b.id]||0)-(weeklyReads[a.id]||0);
       if(reads) return reads;
-      const aTier=comicTier(a,accessPolicies,memberships,offlinePacks.some(pack=>pack.comicId===a.id),Boolean(matchingBaiduFile(a,baiduFiles)));
-      const bTier=comicTier(b,accessPolicies,memberships,offlinePacks.some(pack=>pack.comicId===b.id),Boolean(matchingBaiduFile(b,baiduFiles)));
+      const aTier=comicTier(a,accessPolicies,memberships,offlinePacks.some(pack=>pack.comicId===a.id),Boolean(matchingBaiduFile(a,baiduMatchIndex)));
+      const bTier=comicTier(b,accessPolicies,memberships,offlinePacks.some(pack=>pack.comicId===b.id),Boolean(matchingBaiduFile(b,baiduMatchIndex)));
       const readability=displayRank[aTier]-displayRank[bTier];
       if(readability) return readability;
       return (a.popularityRank||Number.MAX_SAFE_INTEGER)-(b.popularityRank||Number.MAX_SAFE_INTEGER);
     };
     const top=(status?:StatusFilter)=>base
-      .filter(comic=>!status||comicHasStatus(comic,status,accessPolicies,memberships,offlinePacks.some(pack=>pack.comicId===comic.id),Boolean(matchingBaiduFile(comic,baiduFiles))))
+      .filter(comic=>!status||comicHasStatus(comic,status,accessPolicies,memberships,offlinePacks.some(pack=>pack.comicId===comic.id),Boolean(matchingBaiduFile(comic,baiduMatchIndex))))
       .sort(compare)
       .slice(0,20);
     return [
       {key:"overall",title:"总榜",subtitle:"全部观看方式 · TOP 20",comics:top()},
       ...statusFilters.map(status=>({key:status,title:`${displayLabels[status]}榜`,subtitle:`${displayLabels[status]} · TOP 20`,comics:top(status)}))
     ];
-  },[accessPolicies,baiduFiles,blocked,catalog,favorites,memberships,offlinePacks,query,tab,weeklyReads]);
+  },[accessPolicies,baiduMatchIndex,blocked,catalog,favorites,memberships,offlinePacks,query,tab,weeklyReads]);
   const shownComics=visibleComics.slice(0,visibleLimit);
   const sectionTitle=activeStatus?displayLabels[activeStatus]:tab==="favorites"?"我的收藏":query?`“${query}”`:"漫游推荐";
 
   const heroComic=useMemo(()=>{
     const lastRead=Object.entries(history).sort((a,b)=>b[1]-a[1]).map(([id])=>catalog.find(item=>item.id===id)).find(Boolean);
-    return lastRead||catalog[0]||null;
-  },[catalog,history]);
+    const dailyFirst=[...catalog].sort((a,b)=>dailyHash(`${todayKey}:${a.id}`)-dailyHash(`${todayKey}:${b.id}`))[0];
+    return lastRead||dailyFirst||null;
+  },[catalog,history,todayKey]);
 
   if(locked) return <LockScreen onEnter={enter}/>;
 
@@ -447,16 +491,16 @@ export default function Home(){
         : <>
           <section className="trust-strip"><span><ShieldCheck size={17}/></span><div><strong>真实封面 · 正文不伪造</strong><small>{catalogMeta.curatedCount} 部人工核验来源 · {catalogMeta.networkCount} 部真实网络目录 · {syncMessage}</small></div><em>{catalogMeta.count||catalog.length} 部</em></section>
           <div className="status-legend" aria-label="按观看状态筛选">{statusFilters.map(status=><button className={`status-chip ${status} ${activeStatus===status?"active":""}`} key={status} aria-pressed={activeStatus===status} onClick={()=>{setActiveStatus(current=>current===status?null:status);setActiveCategory("全部");setVisibleLimit(60);}}><StatusIcon status={status}/><span>{displayLabels[status]}</span></button>)}</div>
-          {tab==="home"&&heroComic&&!query&&!activeStatus&&activeCategory!=="本周排行"&&<HeroPoster comic={heroComic} chapter={history[heroComic.id]||1} hasHistory={Boolean(history[heroComic.id])} statuses={comicStatuses(heroComic,accessPolicies,memberships,offlinePacks.some(pack=>pack.comicId===heroComic.id),Boolean(matchingBaiduFile(heroComic,baiduFiles)))} onOpen={()=>setSelected(heroComic)} onRead={()=>openPreferred(heroComic)}/>} 
+          {tab==="home"&&heroComic&&!query&&!activeStatus&&activeCategory!=="本周排行"&&<HeroPoster comic={heroComic} chapter={history[heroComic.id]||1} hasHistory={Boolean(history[heroComic.id])} statuses={comicStatuses(heroComic,accessPolicies,memberships,offlinePacks.some(pack=>pack.comicId===heroComic.id),Boolean(matchingBaiduFile(heroComic,baiduMatchIndex)))} onOpen={()=>setSelected(heroComic)} onRead={()=>openPreferred(heroComic)}/>} 
           <div className="category-swipe-surface">
           <nav ref={categoryNav} className="category-scroller" aria-label="漫画分类">{categories.map(category=><button key={category} className={activeCategory===category&&!activeStatus?"active":""} onClick={()=>selectCategory(category)}>{category==="本周排行"&&<Trophy size={13}/>} {category}</button>)}</nav>
           <div key={categoryMotionKey} className={`category-page ${categoryMotion}`}>
           {activeCategory==="本周排行"?<>
             <div className="section-heading weekly-heading"><div><p>WEEKLY READING</p><h2>本周排行</h2></div><span>本机实际阅读 · 每周一重置</span></div>
-            {catalog.length===0?<section className="loading-grid">{Array.from({length:8}).map((_,index)=><i key={index}/>)}</section>:<WeeklyRankings boards={weeklyBoards} weeklyReads={weeklyReads} reactions={reactions} history={history} policies={accessPolicies} memberships={memberships} selectedSources={selectedSources} getStatuses={comic=>selectedComicStatuses(comic,selectedSources[comic.id],accessPolicies,memberships,offlinePacks.some(pack=>pack.comicId===comic.id),Boolean(matchingBaiduFile(comic,baiduFiles)))} onOpen={openPreferred} onSelectSource={selectComicSource} onDetails={setSelected} onReaction={setComicReaction}/>} 
+            {catalog.length===0?<section className="loading-grid">{Array.from({length:8}).map((_,index)=><i key={index}/>)}</section>:<WeeklyRankings boards={weeklyBoards} weeklyReads={weeklyReads} reactions={reactions} history={history} policies={accessPolicies} memberships={memberships} selectedSources={selectedSources} getStatuses={comic=>selectedComicStatuses(comic,selectedSources[comic.id],accessPolicies,memberships,offlinePacks.some(pack=>pack.comicId===comic.id),Boolean(matchingBaiduFile(comic,baiduMatchIndex)))} onOpen={openPreferred} onSelectSource={selectComicSource} onDetails={setSelected} onReaction={setComicReaction}/>} 
           </>:<>
             <div className="section-heading"><div><p>{activeStatus?"ACCESS COLLECTION":tab==="favorites"?"MY COLLECTION":query?"SEARCH RESULTS":"POSTER GALLERY"}</p><h2>{sectionTitle}</h2></div><span>{visibleComics.length} 部</span></div>
-            {catalog.length===0?<section className="loading-grid">{Array.from({length:8}).map((_,index)=><i key={index}/>)}</section>:<section className="cover-grid">{shownComics.map((comic,index)=><ComicCard key={comic.id} comic={comic} reaction={reactions[comic.id]||"neutral"} chapter={history[comic.id]} statuses={selectedComicStatuses(comic,selectedSources[comic.id],accessPolicies,memberships,offlinePacks.some(pack=>pack.comicId===comic.id),Boolean(matchingBaiduFile(comic,baiduFiles)))} policies={accessPolicies} memberships={memberships} sources={orderedSources(comic,accessPolicies,memberships)} selectedSource={selectedSources[comic.id]} weeklyReads={weeklyReads[comic.id]||0} priority={index<4} onOpen={source=>openPreferred(comic,source)} onSelectSource={source=>selectComicSource(comic,source.name)} onDetails={()=>setSelected(comic)} onFavorite={()=>setComicReaction(comic,reactions[comic.id]==="favorite"?"neutral":"favorite")} onBlock={()=>setComicReaction(comic,reactions[comic.id]==="disliked"?"neutral":"disliked")}/>)}{tab==="home"?<InstallPrompt compact/>:<aside className="sky-route" data-count={visibleComics.length} aria-label="今日漫游信息"><span className="sky-route-star"><Star size={15}/></span><p>TODAY&apos;S ROUTE</p><strong>{activeStatus?displayLabels[activeStatus]:activeCategory==="全部"?"随心漫游":activeCategory}</strong><small>01:00 更新</small></aside>}</section>}
+            {catalog.length===0?<section className="loading-grid">{Array.from({length:8}).map((_,index)=><i key={index}/>)}</section>:<section className="cover-grid">{shownComics.map((comic,index)=><ComicCard key={comic.id} comic={comic} reaction={reactions[comic.id]||"neutral"} chapter={history[comic.id]} statuses={selectedComicStatuses(comic,selectedSources[comic.id],accessPolicies,memberships,offlinePacks.some(pack=>pack.comicId===comic.id),Boolean(matchingBaiduFile(comic,baiduMatchIndex)))} policies={accessPolicies} memberships={memberships} sources={orderedSources(comic,accessPolicies,memberships)} selectedSource={selectedSources[comic.id]} weeklyReads={weeklyReads[comic.id]||0} priority={index<4} onOpen={source=>openPreferred(comic,source)} onSelectSource={source=>selectComicSource(comic,source.name)} onDetails={()=>setSelected(comic)} onFavorite={()=>setComicReaction(comic,reactions[comic.id]==="favorite"?"neutral":"favorite")} onBlock={()=>setComicReaction(comic,reactions[comic.id]==="disliked"?"neutral":"disliked")}/>)}{tab==="home"?<InstallPrompt compact/>:<aside className="sky-route" data-count={visibleComics.length} aria-label="今日漫游信息"><span className="sky-route-star"><Star size={15}/></span><p>TODAY&apos;S ROUTE</p><strong>{activeStatus?displayLabels[activeStatus]:activeCategory==="全部"?"随心漫游":activeCategory}</strong><small>01:00 更新</small></aside>}</section>}
             {shownComics.length<visibleComics.length&&<button className="load-more" onClick={()=>setVisibleLimit(limit=>limit+60)}>继续漫游 <small>再显示 60 部 · 共 {visibleComics.length} 部</small></button>}
             {shownComics.length===visibleComics.length&&visibleComics.length>0&&<div className="bottom-rebound" aria-label="已到当前目录末尾"><span>已到当前目录末尾</span><small>页面会自然回弹 · 目录共 {catalogMeta.count||catalog.length} 部</small></div>}
           </>}
@@ -472,7 +516,7 @@ export default function Home(){
       <NavButton active={tab==="profile"} label="我的" onClick={()=>setTab("profile")}><UserRound/></NavButton>
     </nav>
 
-    {selected&&<DetailSheet comic={selected} allComics={catalog} favorite={favorites.includes(selected.id)} historyChapter={history[selected.id]} packs={offlinePacks.filter(pack=>pack.comicId===selected.id)} baiduFile={matchingBaiduFile(selected,baiduFiles)} policies={accessPolicies} memberships={memberships} titleStatus={titleStatus} onClose={()=>setSelected(null)} onRead={()=>openPreferred(selected)} onChapters={()=>{setReader(selected);setSelected(null);}} onFavorite={()=>setComicReaction(selected,reactions[selected.id]==="favorite"?"neutral":"favorite")} onBlock={()=>setComicReaction(selected,reactions[selected.id]==="disliked"?"neutral":"disliked")} onImport={files=>importFiles(selected.id,files)} onOpenPack={openPack} onToggleMembership={toggleMembership} onSelect={setSelected}/>} 
+          {selected&&<DetailSheet comic={selected} allComics={catalog} favorite={favorites.includes(selected.id)} historyChapter={history[selected.id]} packs={offlinePacks.filter(pack=>pack.comicId===selected.id)} baiduFile={matchingBaiduFile(selected,baiduMatchIndex)} policies={accessPolicies} memberships={memberships} titleStatus={titleStatus} onClose={()=>setSelected(null)} onRead={()=>openPreferred(selected)} onChapters={()=>{setReader(selected);setSelected(null);}} onFavorite={()=>setComicReaction(selected,reactions[selected.id]==="favorite"?"neutral":"favorite")} onBlock={()=>setComicReaction(selected,reactions[selected.id]==="disliked"?"neutral":"disliked")} onImport={files=>importFiles(selected.id,files)} onOpenPack={openPack} onToggleMembership={toggleMembership} onSelect={setSelected}/>} 
     {reader&&<ChapterPicker comic={reader} historyChapter={history[reader.id]} packs={offlinePacks.filter(pack=>pack.comicId===reader.id)} policies={accessPolicies} memberships={memberships} titleStatus={titleStatus} onClose={()=>setReader(null)} onSaveChapter={chapter=>updateHistory(reader.id,chapter)} onOpenPack={openPack}/>} 
     {toast&&<div className="toast" role="status"><Check size={15}/>{toast}</div>}
   </main>;
