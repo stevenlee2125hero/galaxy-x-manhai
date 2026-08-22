@@ -38,7 +38,9 @@ const displayLabels:Record<DisplayTier,string>={direct:"直接看",login:"登录
 const displayRank:Record<DisplayTier,number>={netdisk:0,direct:1,login:2,paid:3,member:4,overseas:5,catalog:6,risk:7};
 const statusFilters=["direct","login","paid","member","overseas","netdisk"] as const;
 type StatusFilter=(typeof statusFilters)[number];
-const STATIC_SITE=import.meta.env.VITE_STATIC_SITE==="true";
+// GitHub Pages is the only production runtime. Keep the server API branches
+// available for local legacy inspection, but never call them from the public build.
+const STATIC_SITE=true;
 const SITE_BASE=(import.meta.env.BASE_URL||"/").replace(/\/$/,"");
 function sitePath(path:string){return `${SITE_BASE}${path.startsWith("/")?path:`/${path}`}`||"/";}
 function coverUrl(path:string){return path.startsWith(SITE_BASE+"/")?path:path.startsWith("/")?sitePath(path):path;}

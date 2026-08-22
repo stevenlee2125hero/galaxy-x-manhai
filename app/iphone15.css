@@ -32,6 +32,35 @@
     padding-left: calc(16px + var(--safe-left));
     padding-right: calc(16px + var(--safe-right));
   }
+
+  /* Keep the main reading surface thumb-friendly on phones. */
+  .app-shell {
+    padding-bottom: calc(96px + var(--safe-bottom));
+  }
+
+  .cover-grid {
+    gap: 31px 14px;
+  }
+
+  .cover-grid > .comic-card:nth-child(even) {
+    transform: translateY(24%);
+  }
+
+  .bottom-nav {
+    min-height: calc(68px + var(--safe-bottom));
+    padding-bottom: calc(7px + var(--safe-bottom));
+  }
+
+  .category-scroller,
+  .status-legend,
+  .source-filters,
+  .chapter-shortcuts,
+  .chapter-range,
+  .weekly-rail,
+  .baidu-file-rail {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+  }
 }
 
 @media (display-mode: standalone) {
