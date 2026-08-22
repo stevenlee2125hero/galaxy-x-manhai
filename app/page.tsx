@@ -38,6 +38,10 @@ const displayLabels:Record<DisplayTier,string>={direct:"直接看",login:"登录
 const displayRank:Record<DisplayTier,number>={netdisk:0,direct:1,login:2,paid:3,member:4,overseas:5,catalog:6,risk:7};
 const statusFilters=["direct","login","paid","member","overseas","netdisk"] as const;
 type StatusFilter=(typeof statusFilters)[number];
+const STATIC_SITE=import.meta.env.VITE_STATIC_SITE==="true";
+const SITE_BASE=(import.meta.env.BASE_URL||"/").replace(/\/$/,"");
+function sitePath(path:string){return `${SITE_BASE}${path.startsWith("/")?path:`/${path}`}`||"/";}
+function coverUrl(path:string){return path.startsWith(SITE_BASE+"/")?path:path.startsWith("/")?sitePath(path):path;}
 
 function handleCoverLoad(event:SyntheticEvent<HTMLImageElement>){ event.currentTarget.style.visibility="visible"; }
 function handleCoverError(event:SyntheticEvent<HTMLImageElement>){ event.currentTarget.alt=""; event.currentTarget.style.visibility="hidden"; }
@@ -279,8 +283,8 @@ export default function Home(){
     savedFavorites.forEach(id=>{ if(!initialReactions[id]) initialReactions[id]="favorite"; });
     savedBlocked.forEach(id=>{ delete initialReactions[id]; });
     queueMicrotask(()=>{ setFavorites(savedFavorites); setBlocked(savedBlocked); setReactions(initialReactions); setSelectedSources(savedSources); setHistory(savedHistory); setWeeklyReads(currentWeekly); setMemberships(savedMemberships); setBaiduFiles(savedBaiduFiles); setLocked(sessionLocked); });
-    fetch("/comic-catalog.json").then(r=>r.json()).then((data:Catalog)=>{
-      const comics=Array.isArray(data.comics)?data.comics:[];
+    fetch(sitePath("/comic-catalog.json")).then(r=>r.json()).then((data:Catalog)=>{
+      const comics=Array.isArray(data.comics)?data.comics.map(comic=>({...comic,cover:coverUrl(comic.cover)})):[];
       const matured=Object.entries(savedDislikes).filter(([,queuedAt])=>Boolean(data.updatedAt&&queuedAt&&new Date(data.updatedAt)>new Date(queuedAt))).map(([id])=>id);
       const remaining=Object.fromEntries(Object.entries(savedDislikes).filter(([id])=>!matured.includes(id)));
       if(matured.length){
@@ -294,12 +298,12 @@ export default function Home(){
       setCatalog(comics); setCatalogUpdatedAt(data.updatedAt||"");
       setCatalogMeta({count:data.count||comics.length,curatedCount:data.curatedCount||Math.min(54,comics.length),networkCount:data.networkCount||Math.max(0,comics.length-54)});
     }).catch(()=>setToast("目录加载失败，请稍后刷新"));
-    fetch("/official-sources.json").then(r=>r.json()).then(data=>setSources(Array.isArray(data.sources)?data.sources:[])).catch(()=>undefined);
-    fetch("/source-access.json").then(r=>r.json()).then((data:AccessConfig)=>setAccessPolicies(data.policies||{})).catch(()=>undefined);
-    fetch("/source-status.json").then(r=>r.json()).then(data=>setTitleStatus(data.titles||{})).catch(()=>undefined);
-    fetch("/sync-status.json").then(r=>r.json()).then(data=>data.lastRun&&setSyncMessage(`${data.message||"目录已同步"} · 每天 01:00`)).catch(()=>undefined);
+    fetch(sitePath("/official-sources.json")).then(r=>r.json()).then(data=>setSources(Array.isArray(data.sources)?data.sources:[])).catch(()=>undefined);
+    fetch(sitePath("/source-access.json")).then(r=>r.json()).then((data:AccessConfig)=>setAccessPolicies(data.policies||{})).catch(()=>undefined);
+    fetch(sitePath("/source-status.json")).then(r=>r.json()).then(data=>setTitleStatus(data.titles||{})).catch(()=>undefined);
+    fetch(sitePath("/sync-status.json")).then(r=>r.json()).then(data=>data.lastRun&&setSyncMessage(`${data.message||"目录已同步"} · 每天 01:00`)).catch(()=>undefined);
     listOfflinePacks().then(setOfflinePacks).catch(()=>undefined);
-    fetch(`/api/baidu/status?t=${Date.now()}`,{cache:"no-store"}).then(r=>r.json()).then((status:BaiduStatus)=>setBaiduStatus(status)).catch(()=>undefined);
+    if(!STATIC_SITE) fetch(`/api/baidu/status?t=${Date.now()}`,{cache:"no-store"}).then(r=>r.json()).then((status:BaiduStatus)=>setBaiduStatus(status)).catch(()=>undefined);
     const baiduResult=new URLSearchParams(window.location.search).get("baidu");
     if(baiduResult){
       queueMicrotask(()=>{
@@ -308,7 +312,7 @@ export default function Home(){
       });
       window.history.replaceState({},"",window.location.pathname);
     }
-    if("serviceWorker" in navigator) navigator.serviceWorker.register("/sw.js").catch(()=>undefined);
+    if(!STATIC_SITE&&"serviceWorker" in navigator) navigator.serviceWorker.register("/sw.js").catch(()=>undefined);
   },[]);
 
   useEffect(()=>{ if(!toast)return; const timer=window.setTimeout(()=>setToast(""),2400); return()=>window.clearTimeout(timer); },[toast]);
@@ -483,7 +487,7 @@ export default function Home(){
   return <main className="app-shell">
     <div className="sky-orb sky-orb-a"/><div className="sky-orb sky-orb-b"/>
     <header className="topbar">
-      <button className="brand-button" onClick={()=>setTab("home")}><span className="brand-mark"><img src="/app-icon-192.png" alt="" aria-hidden="true"/></span><span><small>GALAXY MANGA SEA</small><strong>银河X漫海</strong></span></button>
+      <button className="brand-button" onClick={()=>setTab("home")}><span className="brand-mark"><img src={sitePath("/app-icon-192.png")} alt="" aria-hidden="true"/></span><span><small>GALAXY MANGA SEA</small><strong>银河X漫海</strong></span></button>
       <div className="top-actions"><button className="glass-icon" aria-label="搜索" onClick={()=>setSearchOpen(value=>!value)}><Search size={19}/></button><button className="avatar" aria-label="账户" onClick={()=>setTab("profile")}>L</button></div>
     </header>
     {searchOpen&&<label className="searchbar"><Search size={17}/><input autoFocus value={query} onChange={event=>setQuery(event.target.value)} placeholder="搜作品、作者或题材"/>{query&&<button onClick={()=>setQuery("")} aria-label="清空"><X size={16}/></button>}</label>}
@@ -545,7 +549,7 @@ function LockScreen({onEnter}:{onEnter:()=>void}){
   };
   return <main className="lock-screen">
     <div className="cloud cloud-a"/><div className="cloud cloud-b"/>
-    <div className="lock-logo"><img src="/app-icon-512.png" alt="银河X漫海图标"/></div>
+    <div className="lock-logo"><img src={sitePath("/app-icon-512.png")} alt="银河X漫海图标"/></div>
     <p className="eyebrow">PRIVATE MOBILE LIBRARY</p><h1>清爽地，进入漫画世界</h1><p className="lock-note">为手机优化 · 登录状态保留 30 天</p>
     <form className="login-form" onSubmit={submit}>
       <label><span>账号</span><input value={username} onChange={event=>setUsername(event.target.value)} autoComplete="username" enterKeyHint="next" placeholder="请输入账号"/></label>
@@ -562,7 +566,7 @@ function NavButton({active,label,onClick,children}:{active:boolean;label:string;
 function InstallPrompt({compact=false}:{compact?:boolean}){
   const [showSteps,setShowSteps]=useState(false);
   return <section className={`install-prompt ${compact?"compact":""}`}>
-    <span className="install-icon"><img src="/app-icon-192.png" alt="" aria-hidden="true"/></span>
+    <span className="install-icon"><img src={sitePath("/app-icon-192.png")} alt="" aria-hidden="true"/></span>
     <div><p>MOBILE APP</p><strong>安装到手机</strong><small>全屏打开 · 保留登录与阅读记录</small></div>
     {!compact&&<button aria-label={showSteps?"收起安装方法":"查看安装方法"} title={showSteps?"收起":"安装方法"} onClick={()=>setShowSteps(value=>!value)}><Smartphone size={15}/><span>{showSteps?"收起":"安装方法"}</span></button>}
     {!compact&&showSteps&&<ol><li><Share2 size={14}/><span>在 Safari 底部点“分享”</span></li><li><span className="install-plus">＋</span><span>选择“添加到主屏幕”</span></li><li><Check size={14}/><span>右上角点“添加”即可</span></li></ol>}
@@ -586,7 +590,7 @@ function StatusBadges({statuses,compact=false}:{statuses:DisplayTier[];compact?:
 
 function HeroPoster({comic,chapter,hasHistory,statuses,onOpen,onRead}:{comic:Comic;chapter:number;hasHistory:boolean;statuses:DisplayTier[];onOpen:()=>void;onRead:()=>void}){
   return <section className="hero-poster" onClick={onOpen}>
-    <img src={comic.cover} alt={comic.title+"真实出版封面"} referrerPolicy="no-referrer" onLoad={handleCoverLoad} onError={handleCoverError}/><span className="hero-wash"/>
+    <img src={coverUrl(comic.cover)} alt={comic.title+"真实出版封面"} referrerPolicy="no-referrer" onLoad={handleCoverLoad} onError={handleCoverError}/><span className="hero-wash"/>
     <div className="hero-copy"><p>{hasHistory?"CONTINUE READING":comic.catalogOnly?"REAL CATALOG":"START HERE"}</p><h2>{comic.title}</h2><span>{comic.catalogOnly?"真实作品资料":hasHistory?`继续第 ${chapter} 话`:"从第 1 话开始"}</span><span className="hero-statuses">{statuses.map(status=><em className={`access-pill ${status}`} key={status}>{displayLabels[status]}</em>)}</span></div>
     <button onClick={event=>{event.stopPropagation();onRead();}}><BookOpen size={18}/></button>
   </section>;
@@ -625,7 +629,7 @@ function ReactionButtons({reaction,onFavorite,onBlock}:{reaction:Reaction;onFavo
 function ComicCard({comic,reaction,chapter,statuses,policies={},memberships=[],sources,selectedSource,rank,weeklyReads,priority,onOpen,onSelectSource,onDetails,onFavorite,onBlock}:{comic:Comic;reaction:Reaction;chapter?:number;statuses:DisplayTier[];policies?:Record<string,SourcePolicy>;memberships?:string[];sources:ComicSource[];selectedSource?:string;rank?:number;weeklyReads:number;priority:boolean;onOpen:(source?:ComicSource)=>void;onSelectSource:(source:ComicSource)=>void;onDetails:()=>void;onFavorite:()=>void;onBlock:()=>void}){
   return <article className="comic-card">
     <div className="poster-stage"><button className="poster-card" onClick={()=>onOpen(sources.find(source=>source.name===selectedSource)||sources[0])} aria-label={`打开${comic.title}`}>
-      <img src={comic.cover} alt={comic.title+"真实漫画封面"} loading={priority?"eager":"lazy"} referrerPolicy="no-referrer" onLoad={handleCoverLoad} onError={handleCoverError}/>
+      <img src={coverUrl(comic.cover)} alt={comic.title+"真实漫画封面"} loading={priority?"eager":"lazy"} referrerPolicy="no-referrer" onLoad={handleCoverLoad} onError={handleCoverError}/>
       <span className="poster-gloss"/><span className="poster-bottom"/>
       <span className="chapter-badge">{comic.catalogOnly?"真实资料":chapter?`续读 ${chapter} 话`:"第 1 话"}</span>
     </button><SourcePicker comic={comic} sources={sources} policies={policies} memberships={memberships} selectedSource={selectedSource} onSelect={onSelectSource}/></div>
@@ -767,7 +771,7 @@ function Profile({favorites,blocked,catalog,sources,packs,policies,memberships,b
   return <section className="profile-page">
     <div className="profile-card"><div className="profile-avatar">L</div><div><p>ADMIN ACCOUNT</p><h2>银河漫游者</h2><span>本机登录有效期 30 天</span></div><ShieldCheck size={20}/></div>
     <div className="profile-stats"><div><strong>{favorites}</strong><span>收藏</span></div><div><strong>{packs.length}</strong><span>正文缓存</span></div><div><strong>{sources}</strong><span>正版来源</span></div></div>
-    <BaiduPanel status={baiduStatus} files={baiduFiles} onRefresh={onRefreshBaidu} onLoadFiles={onLoadBaidu} onFilesChange={onBaiduFilesChange}/>
+    {STATIC_SITE?<section className="baidu-panel"><div className="baidu-head"><span className="baidu-logo">本</span><div><p>GITHUB WEB</p><h3>本机漫画文件</h3><small>静态网页不保存百度密钥，请使用下方导入</small></div><em>网页版</em></div></section>:<BaiduPanel status={baiduStatus} files={baiduFiles} onRefresh={onRefreshBaidu} onLoadFiles={onLoadBaidu} onFilesChange={onBaiduFilesChange}/>}
     <div className="profile-heading"><div><p>ACCOUNT & ENTITLEMENT</p><h3>平台登录与购买状态</h3></div><small>一次确认 · 本机记住</small></div>
     <div className="membership-list">{accountSources.map(source=><button key={source.name} className={memberships.includes(source.name)?"active":""} onClick={()=>onToggleMembership(source.name)}><span><strong>{source.name}</strong><small>{memberships.includes(source.name)?"状态已记住，下次点击将直接进入":source.access==="login"?"需要先登录免费账号":source.access==="paid"?"需要购买对应章节或单行本":"需要有效会员"}</small></span><em>{memberships.includes(source.name)?"已记住":displayLabels[source.access==="free"?"direct":source.access]}</em></button>)}</div>
     <p className="membership-note">受浏览器隐私限制，本站不能读取其他平台的登录 Cookie。你成功登录、购买或开通后，在这里确认一次即可保存在本机；下次优先打开该来源。平台自身登录有效期仍由平台决定，网络和风险状态每天 01:00 复检。</p>
