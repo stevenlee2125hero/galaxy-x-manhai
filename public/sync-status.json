@@ -1,11 +1,32 @@
 {
-  "lastRun": "2026-09-03T17:04:22.143Z",
-  "status": "success",
+  "lastRun": "2026-09-04T17:04:11.428Z",
+  "status": "partial",
   "addedChapters": 0,
   "sourceCount": 100,
   "trackedTitleCount": 5,
   "checkedPlatformCount": 9,
   "removedRiskSources": 0,
-  "failures": [],
+  "failures": [
+    {
+      "source": "航海王 · 哔哩哔哩漫画",
+      "reason": "Cover HTTP 500"
+    },
+    {
+      "source": "火影忍者 · 哔哩哔哩漫画",
+      "reason": "Cover HTTP 500"
+    },
+    {
+      "source": "龙珠 · 哔哩哔哩漫画",
+      "reason": "Cover HTTP 500"
+    },
+    {
+      "source": "电锯人 · 哔哩哔哩漫画",
+      "reason": "Cover HTTP 500"
+    },
+    {
+      "source": "咒术回战 · 哔哩哔哩漫画",
+      "reason": "Cover HTTP 500"
+    }
+  ],
   "message": "已检查 9 个阅读平台；隔离 0 个风险来源"
 }
