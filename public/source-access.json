@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-09-23T19:55:46.727Z",
+  "updatedAt": "2026-09-24T20:13:51.246Z",
   "policies": {
     "MANGA Plus": {
       "tier": "overseas",
@@ -11,7 +11,7 @@
       "risk": false,
       "removed": false,
       "health": "online",
-      "checkedAt": "2026-09-23T19:55:46.705Z",
+      "checkedAt": "2026-09-24T20:13:51.036Z",
       "riskScan": "unavailable",
       "riskReasons": [],
       "finalUrl": "https://mangaplus.shueisha.co.jp/"
@@ -25,7 +25,7 @@
       "risk": false,
       "removed": false,
       "health": "online",
-      "checkedAt": "2026-09-23T19:55:46.585Z",
+      "checkedAt": "2026-09-24T20:13:51.187Z",
       "riskScan": "unavailable",
       "riskReasons": [],
       "finalUrl": "https://manga.bilibili.com/"
@@ -39,7 +39,7 @@
       "risk": false,
       "removed": false,
       "health": "online",
-      "checkedAt": "2026-09-23T19:55:46.526Z",
+      "checkedAt": "2026-09-24T20:13:50.887Z",
       "riskScan": "unavailable",
       "riskReasons": [],
       "finalUrl": "https://www.viz.com/shonenjump"
@@ -53,7 +53,7 @@
       "risk": false,
       "removed": false,
       "health": "online",
-      "checkedAt": "2026-09-23T19:55:46.407Z",
+      "checkedAt": "2026-09-24T20:13:50.872Z",
       "riskScan": "unavailable",
       "riskReasons": [],
       "finalUrl": "https://www.viz.com/shonenjump"
@@ -67,7 +67,7 @@
       "risk": false,
       "removed": false,
       "health": "online",
-      "checkedAt": "2026-09-23T19:55:46.591Z",
+      "checkedAt": "2026-09-24T20:13:50.918Z",
       "riskScan": "unavailable",
       "riskReasons": [],
       "finalUrl": "https://www.tappytoon.com/en/"
@@ -81,7 +81,7 @@
       "risk": false,
       "removed": false,
       "health": "online",
-      "checkedAt": "2026-09-23T19:55:46.711Z",
+      "checkedAt": "2026-09-24T20:13:51.166Z",
       "riskScan": "unavailable",
       "riskReasons": [],
       "finalUrl": "https://www.webtoons.com/en/"
@@ -95,7 +95,7 @@
       "risk": false,
       "removed": false,
       "health": "online",
-      "checkedAt": "2026-09-23T19:55:46.582Z",
+      "checkedAt": "2026-09-24T20:13:50.818Z",
       "riskScan": "unavailable",
       "riskReasons": [],
       "finalUrl": "https://www.dcuniverseinfinite.com/"
@@ -111,8 +111,8 @@
       "health": "online",
       "riskScan": "unavailable",
       "riskReasons": [],
-      "finalUrl": "https://www.webtoons.com/zh-hant/drama/unemployed-woman/list?title_no=6341",
-      "checkedAt": "2026-09-23T19:55:46.572Z"
+      "finalUrl": "https://www.webtoons.com/zh-hant/western-palace/into-the-light-once-again/list?title_no=8982",
+      "checkedAt": "2026-09-24T20:13:51.245Z"
     },
     "Kitsu 作品资料": {
       "tier": "overseas",
@@ -125,8 +125,8 @@
       "health": "restricted",
       "riskScan": "unavailable",
       "riskReasons": [],
-      "finalUrl": "https://kitsu.app/manga/fairy-tail-houou-no-miko-hajimari-no-asa",
-      "checkedAt": "2026-09-23T19:55:46.727Z"
+      "finalUrl": "https://kitsu.app/manga/anta-to-osananajimi-tte-dake-demo-iya-nanoni-zekkou-kara-hajimaru-s-kyuu-bishoujo-to-no-gakuen-nariagari-seikatsu",
+      "checkedAt": "2026-09-24T20:13:50.953Z"
     }
   }
 }
