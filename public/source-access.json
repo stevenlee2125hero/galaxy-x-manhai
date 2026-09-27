@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-09-26T19:30:47.108Z",
+  "updatedAt": "2026-09-27T19:56:39.180Z",
   "policies": {
     "MANGA Plus": {
       "tier": "overseas",
@@ -11,7 +11,7 @@
       "risk": false,
       "removed": false,
       "health": "online",
-      "checkedAt": "2026-09-26T19:30:46.964Z",
+      "checkedAt": "2026-09-27T19:56:39.053Z",
       "riskScan": "unavailable",
       "riskReasons": [],
       "finalUrl": "https://mangaplus.shueisha.co.jp/"
@@ -25,7 +25,7 @@
       "risk": false,
       "removed": false,
       "health": "online",
-      "checkedAt": "2026-09-26T19:30:46.854Z",
+      "checkedAt": "2026-09-27T19:56:38.955Z",
       "riskScan": "unavailable",
       "riskReasons": [],
       "finalUrl": "https://manga.bilibili.com/"
@@ -39,7 +39,7 @@
       "risk": false,
       "removed": false,
       "health": "online",
-      "checkedAt": "2026-09-26T19:30:46.655Z",
+      "checkedAt": "2026-09-27T19:56:38.821Z",
       "riskScan": "unavailable",
       "riskReasons": [],
       "finalUrl": "https://www.viz.com/shonenjump"
@@ -53,7 +53,7 @@
       "risk": false,
       "removed": false,
       "health": "online",
-      "checkedAt": "2026-09-26T19:30:46.664Z",
+      "checkedAt": "2026-09-27T19:56:38.930Z",
       "riskScan": "unavailable",
       "riskReasons": [],
       "finalUrl": "https://www.viz.com/shonenjump"
@@ -67,7 +67,7 @@
       "risk": false,
       "removed": false,
       "health": "online",
-      "checkedAt": "2026-09-26T19:30:46.952Z",
+      "checkedAt": "2026-09-27T19:56:38.942Z",
       "riskScan": "unavailable",
       "riskReasons": [],
       "finalUrl": "https://www.tappytoon.com/en/"
@@ -81,7 +81,7 @@
       "risk": false,
       "removed": false,
       "health": "online",
-      "checkedAt": "2026-09-26T19:30:47.083Z",
+      "checkedAt": "2026-09-27T19:56:39.162Z",
       "riskScan": "unavailable",
       "riskReasons": [],
       "finalUrl": "https://www.webtoons.com/en/"
@@ -95,7 +95,7 @@
       "risk": false,
       "removed": false,
       "health": "online",
-      "checkedAt": "2026-09-26T19:30:46.784Z",
+      "checkedAt": "2026-09-27T19:56:38.943Z",
       "riskScan": "unavailable",
       "riskReasons": [],
       "finalUrl": "https://www.dcuniverseinfinite.com/"
@@ -111,8 +111,8 @@
       "health": "online",
       "riskScan": "unavailable",
       "riskReasons": [],
-      "finalUrl": "https://www.webtoons.com/zh-hant/fantasy/theres-no-such-thing-as-a-bad-lady/list?title_no=9758",
-      "checkedAt": "2026-09-26T19:30:47.108Z"
+      "finalUrl": "https://www.webtoons.com/zh-hant/heartwarming/hello-mr-veterinarian/list?title_no=10687",
+      "checkedAt": "2026-09-27T19:56:39.180Z"
     },
     "Kitsu 作品资料": {
       "tier": "overseas",
@@ -125,8 +125,8 @@
       "health": "restricted",
       "riskScan": "unavailable",
       "riskReasons": [],
-      "finalUrl": "https://kitsu.app/manga/100-no-kimi-e",
-      "checkedAt": "2026-09-26T19:30:46.769Z"
+      "finalUrl": "https://kitsu.app/manga/shikabane-hime",
+      "checkedAt": "2026-09-27T19:56:38.952Z"
     }
   }
 }
