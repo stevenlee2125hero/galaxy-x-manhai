@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-03T19:35:56.725Z",
+  "updatedAt": "2026-10-04T19:51:36.121Z",
   "policies": {
     "MANGA Plus": {
       "tier": "overseas",
@@ -11,7 +11,7 @@
       "risk": false,
       "removed": false,
       "health": "online",
-      "checkedAt": "2026-10-03T19:35:56.432Z",
+      "checkedAt": "2026-10-04T19:51:35.807Z",
       "riskScan": "unavailable",
       "riskReasons": [],
       "finalUrl": "https://mangaplus.shueisha.co.jp/"
@@ -25,7 +25,7 @@
       "risk": false,
       "removed": false,
       "health": "online",
-      "checkedAt": "2026-10-03T19:35:56.349Z",
+      "checkedAt": "2026-10-04T19:51:35.737Z",
       "riskScan": "unavailable",
       "riskReasons": [],
       "finalUrl": "https://manga.bilibili.com/"
@@ -39,7 +39,7 @@
       "risk": false,
       "removed": false,
       "health": "online",
-      "checkedAt": "2026-10-03T19:35:56.300Z",
+      "checkedAt": "2026-10-04T19:51:35.637Z",
       "riskScan": "unavailable",
       "riskReasons": [],
       "finalUrl": "https://www.viz.com/shonenjump"
@@ -53,7 +53,7 @@
       "risk": false,
       "removed": false,
       "health": "online",
-      "checkedAt": "2026-10-03T19:35:56.243Z",
+      "checkedAt": "2026-10-04T19:51:35.706Z",
       "riskScan": "unavailable",
       "riskReasons": [],
       "finalUrl": "https://www.viz.com/shonenjump"
@@ -67,7 +67,7 @@
       "risk": false,
       "removed": false,
       "health": "online",
-      "checkedAt": "2026-10-03T19:35:56.349Z",
+      "checkedAt": "2026-10-04T19:51:35.877Z",
       "riskScan": "unavailable",
       "riskReasons": [],
       "finalUrl": "https://www.tappytoon.com/en/"
@@ -81,7 +81,7 @@
       "risk": false,
       "removed": false,
       "health": "online",
-      "checkedAt": "2026-10-03T19:35:56.659Z",
+      "checkedAt": "2026-10-04T19:51:36.059Z",
       "riskScan": "unavailable",
       "riskReasons": [],
       "finalUrl": "https://www.webtoons.com/en/"
@@ -95,7 +95,7 @@
       "risk": false,
       "removed": false,
       "health": "online",
-      "checkedAt": "2026-10-03T19:35:56.296Z",
+      "checkedAt": "2026-10-04T19:51:35.713Z",
       "riskScan": "unavailable",
       "riskReasons": [],
       "finalUrl": "https://www.dcuniverseinfinite.com/"
@@ -111,8 +111,8 @@
       "health": "online",
       "riskScan": "unavailable",
       "riskReasons": [],
-      "finalUrl": "https://www.webtoons.com/zh-hant/romance/give-you-the-most-rotten-one/list?title_no=6333",
-      "checkedAt": "2026-10-03T19:35:56.724Z"
+      "finalUrl": "https://www.webtoons.com/zh-hant/romance/ex-love-review/list?title_no=7723",
+      "checkedAt": "2026-10-04T19:51:36.121Z"
     },
     "Kitsu 作品资料": {
       "tier": "overseas",
@@ -125,8 +125,8 @@
       "health": "restricted",
       "riskScan": "unavailable",
       "riskReasons": [],
-      "finalUrl": "https://kitsu.app/manga/hanako-to-guuwa-no-tera",
-      "checkedAt": "2026-10-03T19:35:56.330Z"
+      "finalUrl": "https://kitsu.app/manga/my-purrfect-boss",
+      "checkedAt": "2026-10-04T19:51:35.690Z"
     }
   }
 }
