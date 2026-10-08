@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-07T21:41:58.723Z",
+  "updatedAt": "2026-10-08T21:38:00.571Z",
   "policies": {
     "MANGA Plus": {
       "tier": "overseas",
@@ -11,7 +11,7 @@
       "risk": false,
       "removed": false,
       "health": "online",
-      "checkedAt": "2026-10-07T21:41:58.489Z",
+      "checkedAt": "2026-10-08T21:38:00.294Z",
       "riskScan": "unavailable",
       "riskReasons": [],
       "finalUrl": "https://mangaplus.shueisha.co.jp/"
@@ -25,7 +25,7 @@
       "risk": false,
       "removed": false,
       "health": "online",
-      "checkedAt": "2026-10-07T21:41:58.375Z",
+      "checkedAt": "2026-10-08T21:38:00.160Z",
       "riskScan": "unavailable",
       "riskReasons": [],
       "finalUrl": "https://manga.bilibili.com/"
@@ -39,7 +39,7 @@
       "risk": false,
       "removed": false,
       "health": "online",
-      "checkedAt": "2026-10-07T21:41:58.284Z",
+      "checkedAt": "2026-10-08T21:38:00.019Z",
       "riskScan": "unavailable",
       "riskReasons": [],
       "finalUrl": "https://www.viz.com/shonenjump"
@@ -53,7 +53,7 @@
       "risk": false,
       "removed": false,
       "health": "online",
-      "checkedAt": "2026-10-07T21:41:58.328Z",
+      "checkedAt": "2026-10-08T21:38:00.110Z",
       "riskScan": "unavailable",
       "riskReasons": [],
       "finalUrl": "https://www.viz.com/shonenjump"
@@ -67,7 +67,7 @@
       "risk": false,
       "removed": false,
       "health": "online",
-      "checkedAt": "2026-10-07T21:41:58.400Z",
+      "checkedAt": "2026-10-08T21:38:00.264Z",
       "riskScan": "unavailable",
       "riskReasons": [],
       "finalUrl": "https://www.tappytoon.com/en/"
@@ -81,7 +81,7 @@
       "risk": false,
       "removed": false,
       "health": "online",
-      "checkedAt": "2026-10-07T21:41:58.717Z",
+      "checkedAt": "2026-10-08T21:38:00.424Z",
       "riskScan": "unavailable",
       "riskReasons": [],
       "finalUrl": "https://www.webtoons.com/en/"
@@ -95,7 +95,7 @@
       "risk": false,
       "removed": false,
       "health": "online",
-      "checkedAt": "2026-10-07T21:41:58.319Z",
+      "checkedAt": "2026-10-08T21:38:00.126Z",
       "riskScan": "unavailable",
       "riskReasons": [],
       "finalUrl": "https://www.dcuniverseinfinite.com/"
@@ -111,8 +111,8 @@
       "health": "online",
       "riskScan": "unavailable",
       "riskReasons": [],
-      "finalUrl": "https://www.webtoons.com/zh-hant/martial-arts/warrior-grandpa-and-his-supreme-granddaughter/list?title_no=6047",
-      "checkedAt": "2026-10-07T21:41:58.723Z"
+      "finalUrl": "https://www.webtoons.com/zh-hant/romance/escaping-the-single-life/list?title_no=7376",
+      "checkedAt": "2026-10-08T21:38:00.570Z"
     },
     "Kitsu 作品资料": {
       "tier": "overseas",
@@ -125,8 +125,8 @@
       "health": "restricted",
       "riskScan": "unavailable",
       "riskReasons": [],
-      "finalUrl": "https://kitsu.app/manga/fukashigi-philia",
-      "checkedAt": "2026-10-07T21:41:58.417Z"
+      "finalUrl": "https://kitsu.app/manga/sherlock-manga",
+      "checkedAt": "2026-10-08T21:38:00.210Z"
     }
   }
 }
