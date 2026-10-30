@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-29T21:30:02.127Z",
+  "updatedAt": "2026-10-30T21:14:29.599Z",
   "policies": {
     "MANGA Plus": {
       "tier": "overseas",
@@ -11,7 +11,7 @@
       "risk": false,
       "removed": false,
       "health": "online",
-      "checkedAt": "2026-10-29T21:30:02.099Z",
+      "checkedAt": "2026-10-30T21:14:29.501Z",
       "riskScan": "unavailable",
       "riskReasons": [],
       "finalUrl": "https://mangaplus.shueisha.co.jp/"
@@ -25,7 +25,7 @@
       "risk": false,
       "removed": false,
       "health": "online",
-      "checkedAt": "2026-10-29T21:30:01.807Z",
+      "checkedAt": "2026-10-30T21:14:29.417Z",
       "riskScan": "unavailable",
       "riskReasons": [],
       "finalUrl": "https://manga.bilibili.com/"
@@ -39,7 +39,7 @@
       "risk": false,
       "removed": false,
       "health": "online",
-      "checkedAt": "2026-10-29T21:30:01.892Z",
+      "checkedAt": "2026-10-30T21:14:29.302Z",
       "riskScan": "unavailable",
       "riskReasons": [],
       "finalUrl": "https://www.viz.com/shonenjump"
@@ -53,7 +53,7 @@
       "risk": false,
       "removed": false,
       "health": "online",
-      "checkedAt": "2026-10-29T21:30:01.760Z",
+      "checkedAt": "2026-10-30T21:14:29.345Z",
       "riskScan": "unavailable",
       "riskReasons": [],
       "finalUrl": "https://www.viz.com/shonenjump"
@@ -67,7 +67,7 @@
       "risk": false,
       "removed": false,
       "health": "online",
-      "checkedAt": "2026-10-29T21:30:01.921Z",
+      "checkedAt": "2026-10-30T21:14:29.457Z",
       "riskScan": "unavailable",
       "riskReasons": [],
       "finalUrl": "https://www.tappytoon.com/en/"
@@ -81,7 +81,7 @@
       "risk": false,
       "removed": false,
       "health": "online",
-      "checkedAt": "2026-10-29T21:30:02.024Z",
+      "checkedAt": "2026-10-30T21:14:29.598Z",
       "riskScan": "unavailable",
       "riskReasons": [],
       "finalUrl": "https://www.webtoons.com/en/"
@@ -95,7 +95,7 @@
       "risk": false,
       "removed": false,
       "health": "online",
-      "checkedAt": "2026-10-29T21:30:01.859Z",
+      "checkedAt": "2026-10-30T21:14:29.398Z",
       "riskScan": "unavailable",
       "riskReasons": [],
       "finalUrl": "https://www.dcuniverseinfinite.com/"
@@ -111,8 +111,8 @@
       "health": "online",
       "riskScan": "unavailable",
       "riskReasons": [],
-      "finalUrl": "https://www.webtoons.com/zh-hant/fantasy/the-reborn-young-lord-is-an-assassin/list?title_no=6321",
-      "checkedAt": "2026-10-29T21:30:02.126Z"
+      "finalUrl": "https://www.webtoons.com/zh-hant/western-palace/my-bias-is-obsessed-with-me/list?title_no=9757",
+      "checkedAt": "2026-10-30T21:14:29.503Z"
     },
     "Kitsu 作品资料": {
       "tier": "overseas",
@@ -126,7 +126,7 @@
       "riskScan": "unavailable",
       "riskReasons": [],
       "finalUrl": "https://kitsu.app/manga/broken-lily",
-      "checkedAt": "2026-10-29T21:30:01.838Z"
+      "checkedAt": "2026-10-30T21:14:29.485Z"
     }
   }
 }
