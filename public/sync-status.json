@@ -1,16 +1,11 @@
 {
-  "lastRun": "2026-11-03T22:10:21.369Z",
-  "status": "partial",
+  "lastRun": "2026-11-04T22:18:01.106Z",
+  "status": "success",
   "addedChapters": 0,
   "sourceCount": 100,
   "trackedTitleCount": 5,
   "checkedPlatformCount": 9,
   "removedRiskSources": 0,
-  "failures": [
-    {
-      "source": "咒术回战 · 哔哩哔哩漫画",
-      "reason": "Unexpected cover size"
-    }
-  ],
+  "failures": [],
   "message": "已检查 9 个阅读平台；隔离 0 个风险来源"
 }
