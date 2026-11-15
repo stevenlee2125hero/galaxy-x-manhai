@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-14T21:02:45.797Z",
+  "updatedAt": "2026-11-15T21:26:46.366Z",
   "policies": {
     "MANGA Plus": {
       "tier": "overseas",
@@ -11,7 +11,7 @@
       "risk": false,
       "removed": false,
       "health": "online",
-      "checkedAt": "2026-11-14T21:02:45.744Z",
+      "checkedAt": "2026-11-15T21:26:46.118Z",
       "riskScan": "unavailable",
       "riskReasons": [],
       "finalUrl": "https://mangaplus.shueisha.co.jp/"
@@ -25,7 +25,7 @@
       "risk": false,
       "removed": false,
       "health": "online",
-      "checkedAt": "2026-11-14T21:02:45.712Z",
+      "checkedAt": "2026-11-15T21:26:46.053Z",
       "riskScan": "unavailable",
       "riskReasons": [],
       "finalUrl": "https://manga.bilibili.com/"
@@ -39,7 +39,7 @@
       "risk": false,
       "removed": false,
       "health": "online",
-      "checkedAt": "2026-11-14T21:02:45.383Z",
+      "checkedAt": "2026-11-15T21:26:45.987Z",
       "riskScan": "unavailable",
       "riskReasons": [],
       "finalUrl": "https://www.viz.com/shonenjump"
@@ -53,7 +53,7 @@
       "risk": false,
       "removed": false,
       "health": "online",
-      "checkedAt": "2026-11-14T21:02:45.381Z",
+      "checkedAt": "2026-11-15T21:26:45.898Z",
       "riskScan": "unavailable",
       "riskReasons": [],
       "finalUrl": "https://www.viz.com/shonenjump"
@@ -67,7 +67,7 @@
       "risk": false,
       "removed": false,
       "health": "online",
-      "checkedAt": "2026-11-14T21:02:45.462Z",
+      "checkedAt": "2026-11-15T21:26:46.053Z",
       "riskScan": "unavailable",
       "riskReasons": [],
       "finalUrl": "https://www.tappytoon.com/en/"
@@ -81,7 +81,7 @@
       "risk": false,
       "removed": false,
       "health": "online",
-      "checkedAt": "2026-11-14T21:02:45.755Z",
+      "checkedAt": "2026-11-15T21:26:46.366Z",
       "riskScan": "unavailable",
       "riskReasons": [],
       "finalUrl": "https://www.webtoons.com/en/"
@@ -95,7 +95,7 @@
       "risk": false,
       "removed": false,
       "health": "online",
-      "checkedAt": "2026-11-14T21:02:45.480Z",
+      "checkedAt": "2026-11-15T21:26:45.984Z",
       "riskScan": "unavailable",
       "riskReasons": [],
       "finalUrl": "https://www.dcuniverseinfinite.com/"
@@ -111,8 +111,8 @@
       "health": "online",
       "riskScan": "unavailable",
       "riskReasons": [],
-      "finalUrl": "https://www.webtoons.com/zh-hant/fantasy/the-wizards-restaurant/list?title_no=6251",
-      "checkedAt": "2026-11-14T21:02:45.796Z"
+      "finalUrl": "https://www.webtoons.com/zh-hant/fantasy/the-ghost-writing-hero/list?title_no=8530",
+      "checkedAt": "2026-11-15T21:26:46.060Z"
     },
     "Kitsu 作品资料": {
       "tier": "overseas",
@@ -126,7 +126,7 @@
       "riskScan": "unavailable",
       "riskReasons": [],
       "finalUrl": "https://kitsu.app/manga/urooboe-uroboros",
-      "checkedAt": "2026-11-14T21:02:45.706Z"
+      "checkedAt": "2026-11-15T21:26:46.113Z"
     }
   }
 }
