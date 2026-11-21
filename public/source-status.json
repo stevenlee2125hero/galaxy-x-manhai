@@ -1,34 +1,34 @@
 {
-  "updatedAt": "2026-11-20T22:53:51.665Z",
+  "updatedAt": "2026-11-21T21:59:00.191Z",
   "titles": {
     "one-piece": {
       "name": "航海王 · 哔哩哔哩漫画",
       "latest": 1190,
-      "checkedAt": "2026-11-20T22:53:47.538Z",
+      "checkedAt": "2026-11-21T21:58:55.187Z",
       "sourceUrl": "https://manga.bilibili.com/detail/mc24742"
     },
     "naruto": {
       "name": "火影忍者 · 哔哩哔哩漫画",
       "latest": 702,
-      "checkedAt": "2026-11-20T22:53:48.580Z",
+      "checkedAt": "2026-11-21T21:58:56.141Z",
       "sourceUrl": "https://manga.bilibili.com/detail/mc24733"
     },
     "dragon-ball": {
       "name": "龙珠 · 哔哩哔哩漫画",
       "latest": 543,
-      "checkedAt": "2026-11-20T22:53:49.012Z",
+      "checkedAt": "2026-11-21T21:58:56.448Z",
       "sourceUrl": "https://manga.bilibili.com/detail/mc24743"
     },
     "chainsaw-man": {
       "name": "电锯人 · 哔哩哔哩漫画",
       "latest": 232,
-      "checkedAt": "2026-11-20T22:53:49.685Z",
+      "checkedAt": "2026-11-21T21:58:57.005Z",
       "sourceUrl": "https://manga.bilibili.com/detail/mc28376"
     },
     "jujutsu-kaisen": {
       "name": "咒术回战 · 哔哩哔哩漫画",
       "latest": 301,
-      "checkedAt": "2026-11-20T22:53:50.340Z",
+      "checkedAt": "2026-11-21T21:58:57.532Z",
       "sourceUrl": "https://manga.bilibili.com/detail/mc26505"
     }
   }
