@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-21T21:59:00.192Z",
+  "updatedAt": "2026-11-22T22:14:11.586Z",
   "policies": {
     "MANGA Plus": {
       "tier": "overseas",
@@ -11,7 +11,7 @@
       "risk": false,
       "removed": false,
       "health": "online",
-      "checkedAt": "2026-11-21T21:59:00.113Z",
+      "checkedAt": "2026-11-22T22:14:11.217Z",
       "riskScan": "unavailable",
       "riskReasons": [],
       "finalUrl": "https://mangaplus.shueisha.co.jp/"
@@ -25,7 +25,7 @@
       "risk": false,
       "removed": false,
       "health": "online",
-      "checkedAt": "2026-11-21T21:58:59.864Z",
+      "checkedAt": "2026-11-22T22:14:11.370Z",
       "riskScan": "unavailable",
       "riskReasons": [],
       "finalUrl": "https://manga.bilibili.com/"
@@ -39,7 +39,7 @@
       "risk": false,
       "removed": false,
       "health": "online",
-      "checkedAt": "2026-11-21T21:58:59.704Z",
+      "checkedAt": "2026-11-22T22:14:11.164Z",
       "riskScan": "unavailable",
       "riskReasons": [],
       "finalUrl": "https://www.viz.com/shonenjump"
@@ -53,7 +53,7 @@
       "risk": false,
       "removed": false,
       "health": "online",
-      "checkedAt": "2026-11-21T21:58:59.711Z",
+      "checkedAt": "2026-11-22T22:14:11.178Z",
       "riskScan": "unavailable",
       "riskReasons": [],
       "finalUrl": "https://www.viz.com/shonenjump"
@@ -67,7 +67,7 @@
       "risk": false,
       "removed": false,
       "health": "online",
-      "checkedAt": "2026-11-21T21:58:59.877Z",
+      "checkedAt": "2026-11-22T22:14:11.379Z",
       "riskScan": "unavailable",
       "riskReasons": [],
       "finalUrl": "https://www.tappytoon.com/en/"
@@ -81,7 +81,7 @@
       "risk": false,
       "removed": false,
       "health": "online",
-      "checkedAt": "2026-11-21T21:59:00.175Z",
+      "checkedAt": "2026-11-22T22:14:11.362Z",
       "riskScan": "unavailable",
       "riskReasons": [],
       "finalUrl": "https://www.webtoons.com/en/"
@@ -95,7 +95,7 @@
       "risk": false,
       "removed": false,
       "health": "online",
-      "checkedAt": "2026-11-21T21:59:00.080Z",
+      "checkedAt": "2026-11-22T22:14:11.208Z",
       "riskScan": "unavailable",
       "riskReasons": [],
       "finalUrl": "https://www.dcuniverseinfinite.com/"
@@ -111,8 +111,8 @@
       "health": "online",
       "riskScan": "unavailable",
       "riskReasons": [],
-      "finalUrl": "https://www.webtoons.com/zh-hant/western-palace/the-villainess-just-wants-to-live-in-peace/list?title_no=7270",
-      "checkedAt": "2026-11-21T21:59:00.191Z"
+      "finalUrl": "https://www.webtoons.com/zh-hant/western-palace/my-numbered-days-of-happiness/list?title_no=10033",
+      "checkedAt": "2026-11-22T22:14:11.585Z"
     },
     "Kitsu 作品资料": {
       "tier": "overseas",
@@ -126,7 +126,7 @@
       "riskScan": "unavailable",
       "riskReasons": [],
       "finalUrl": "https://kitsu.app/manga/mangnaniui-nunimisida",
-      "checkedAt": "2026-11-21T21:59:00.094Z"
+      "checkedAt": "2026-11-22T22:14:11.233Z"
     }
   }
 }
