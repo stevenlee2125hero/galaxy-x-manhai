@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-25T01:12:11.227Z",
+  "updatedAt": "2026-11-26T00:48:06.126Z",
   "policies": {
     "MANGA Plus": {
       "tier": "overseas",
@@ -11,7 +11,7 @@
       "risk": false,
       "removed": false,
       "health": "online",
-      "checkedAt": "2026-11-25T01:12:11.005Z",
+      "checkedAt": "2026-11-26T00:48:06.038Z",
       "riskScan": "unavailable",
       "riskReasons": [],
       "finalUrl": "https://mangaplus.shueisha.co.jp/"
@@ -25,7 +25,7 @@
       "risk": false,
       "removed": false,
       "health": "online",
-      "checkedAt": "2026-11-25T01:12:10.957Z",
+      "checkedAt": "2026-11-26T00:48:06.002Z",
       "riskScan": "unavailable",
       "riskReasons": [],
       "finalUrl": "https://manga.bilibili.com/"
@@ -39,7 +39,7 @@
       "risk": false,
       "removed": false,
       "health": "online",
-      "checkedAt": "2026-11-25T01:12:10.845Z",
+      "checkedAt": "2026-11-26T00:48:06.029Z",
       "riskScan": "unavailable",
       "riskReasons": [],
       "finalUrl": "https://www.viz.com/shonenjump"
@@ -53,7 +53,7 @@
       "risk": false,
       "removed": false,
       "health": "online",
-      "checkedAt": "2026-11-25T01:12:10.816Z",
+      "checkedAt": "2026-11-26T00:48:04.564Z",
       "riskScan": "unavailable",
       "riskReasons": [],
       "finalUrl": "https://www.viz.com/shonenjump"
@@ -67,7 +67,7 @@
       "risk": false,
       "removed": false,
       "health": "online",
-      "checkedAt": "2026-11-25T01:12:11.039Z",
+      "checkedAt": "2026-11-26T00:48:06.061Z",
       "riskScan": "unavailable",
       "riskReasons": [],
       "finalUrl": "https://www.tappytoon.com/en/"
@@ -81,7 +81,7 @@
       "risk": false,
       "removed": false,
       "health": "online",
-      "checkedAt": "2026-11-25T01:12:11.226Z",
+      "checkedAt": "2026-11-26T00:48:06.125Z",
       "riskScan": "unavailable",
       "riskReasons": [],
       "finalUrl": "https://www.webtoons.com/en/"
@@ -95,7 +95,7 @@
       "risk": false,
       "removed": false,
       "health": "online",
-      "checkedAt": "2026-11-25T01:12:10.927Z",
+      "checkedAt": "2026-11-26T00:48:06.071Z",
       "riskScan": "unavailable",
       "riskReasons": [],
       "finalUrl": "https://www.dcuniverseinfinite.com/"
@@ -111,8 +111,8 @@
       "health": "online",
       "riskScan": "unavailable",
       "riskReasons": [],
-      "finalUrl": "https://www.webtoons.com/zh-hant/fantasy/screw-it-im-selling-cola/list?title_no=11586",
-      "checkedAt": "2026-11-25T01:12:10.981Z"
+      "finalUrl": "https://www.webtoons.com/zh-hant/fantasy/the-returned-c-rank-tank-wont-die/list?title_no=8054",
+      "checkedAt": "2026-11-26T00:48:04.786Z"
     },
     "Kitsu 作品资料": {
       "tier": "overseas",
@@ -126,7 +126,7 @@
       "riskScan": "unavailable",
       "riskReasons": [],
       "finalUrl": "https://kitsu.app/manga/tatoe-hai-ni-nattemo",
-      "checkedAt": "2026-11-25T01:12:11.010Z"
+      "checkedAt": "2026-11-26T00:48:06.092Z"
     }
   }
 }
